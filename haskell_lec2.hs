@@ -90,5 +90,6 @@ and
 
 zip [1 .. 5] ["one", "two", "three", "four", "five"] produces 
 [(1,"one"),(2,"two"),(3,"three"),(4,"four"),(5,"five")]   
-
+With two lists of different lengths, the longer list is cut off 
+to match the shorter one
 -}
