@@ -92,4 +92,26 @@ zip [1 .. 5] ["one", "two", "three", "four", "five"] produces
 [(1,"one"),(2,"two"),(3,"three"),(4,"four"),(5,"five")]   
 With two lists of different lengths, the longer list is cut off 
 to match the shorter one
+
+
+- Problem: find all right triangles with sides of length (integers) less
+than 10 with a perimeter of 24
+
+Also, a <= b, b <= c, 
+
+First, get all triples of sides less than 10
+
+let triples = [(a,b,c) | c <- [1 .. 10], b <- [1 .. c], a <- [1 .. b]]
+
+Then get right triangles
+
+let rightTriangles = [(a,b,c) | (a, b, c) <- triples, c^2 == b^2 + a^2]
+
+let ourTriangles = [(a,b,c) | (a, b, c) <- rightTriangles, a+b+c==24]
+
+Here's the one-liner
+let rightTriangles' = [ (a,b,c) 
+| c <- [1..10], b <- [1..c], 
+a <- [1..b], 
+a^2 + b^2 == c^2, a+b+c == 24] 
 -}
