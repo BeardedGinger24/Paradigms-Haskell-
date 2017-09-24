@@ -177,24 +177,24 @@ False
 
 Try:
 
-ghci> :t 20  
+Prelude> :t 20  
 20 :: (Num t) => t  
 
 int, Integer, Float, and Double are Num's
 
-ghci> 20 :: Int  
+Prelude> 20 :: Int  
 20  
-ghci> 20 :: Integer  
+Prelude> 20 :: Integer  
 20  
-ghci> 20 :: Float  
+Prelude> 20 :: Float  
 20.0  
-ghci> 20 :: Double  
+Prelude> 20 :: Double  
 20.0  
 
 - Some functions take any Num
 
 Try:
-ghci> :t (*)  
+Prelude> :t (*)  
 (*) :: (Num a) => a -> a -> a  
 
 - Integral -- includes only whole numbers
