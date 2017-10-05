@@ -87,12 +87,12 @@ tell (x:y:_) = "This list is long. The first two elements are: " ++ show x ++ " 
 -- here's a length function using patterns and recursion
 length' :: (Num b) => [a] -> b  
 length' [] = 0  
-length' (_:xs) = 1 + length' xs  
+length' (_:the_rest) = 1 + length' the_rest  
 
 -- sum with patterns and recursion
-sum' :: (Num a) => [a] - a
+sum' :: (Num a) => [a] -> a
 sum' [] = 0
-sum' x:xs = x + sum' xs
+sum' (x:xs) = x + sum' xs
 
 
 -- binding variables to patterns: v@pattern to avoid 
