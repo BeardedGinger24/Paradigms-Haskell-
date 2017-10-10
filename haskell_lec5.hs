@@ -119,8 +119,10 @@ parts of a tuple into components and binding them to names and such
 
 ghci> (let (a,b,c) = (1,2,3) in a+b+c) * 100  
 
-Let bndings can also be used in list comprehensions
+-}
 
+{-
+Let bndings can also be used in list comprehensions
 Revisiting calcBMIs
 -}
 
@@ -142,13 +144,8 @@ scope is the whole comprehension
 Try
 ghci> let zoot x y z = x * y + z 
 
-Then try 
-ghci> let boot x y z = x * y + z in boot 3 4 2 
-
 Then try
 ghci> zoot 3 9 2  
-ghci> boot 
-boot will be out of scope
 
 
 *Case Expressions*
