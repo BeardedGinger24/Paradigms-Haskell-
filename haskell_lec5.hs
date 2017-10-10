@@ -166,21 +166,25 @@ they have different names)
 -}
 
 head' :: [a] -> a
-head' :: [] = error "No head for empty lists"
+head' [] = error "No head for empty lists"
 head' (x:_) = x
 
-head2 :: [a] -> a
-head2 xs = case xs of [] -> error "No head for empty lists"
-            (x:_) -> x
+head2 :: [a] -> a  
+head2 xs = case xs of [] -> error "No head for empty lists!"  
+                      (x:_) -> x  
 
+{-
+Case expressions can be used outside of defining functions (unlike
+pattern matching)
 
+In this case, the case expressions aren't used to define the function
+as to add something to an already existing function definition
+-}
 
-
-
-
-
-
-
+describeList :: [a] -> String  
+describeList xs = "The list is " ++ case xs of [] -> "empty."  
+                                               [x] -> "a singleton list."   
+                                               xs -> "a longer list."  
 
 
 
