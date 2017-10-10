@@ -39,10 +39,10 @@ in the example below
 
 bmiTell1 :: (RealFloat a) => a -> a -> String  
 bmiTell1 weight height  
-    | bmi <= skinny = "You're underweight, you emo, you!"  
-    | bmi <= normal = "You're supposedly normal. Pffft, I bet you're ugly!"  
-    | bmi <= fat    = "You're fat! Lose some weight, fatty!"  
-    | otherwise     = "You're a whale, congratulations!"  
+    | bmi <= skinny = "You're underweight"  
+    | bmi <= normal = "You're supposedly normal" 
+    | bmi <= fat    = "You're overweight"   
+    | otherwise     = "You're obese"  
     where bmi = weight / height ^ 2  
           skinny = 18.5  
           normal = 25.0  
@@ -57,10 +57,10 @@ you can use where to pattern match
 -}
 bmiTell2 :: (RealFloat a) => a -> a -> String  
 bmiTell2 weight height  
-    | bmi <= skinny = "You're underweight, you emo, you!"  
-    | bmi <= normal = "You're supposedly normal. Pffft, I bet you're ugly!"  
-    | bmi <= fat    = "You're fat! Lose some weight, fatty!"  
-    | otherwise     = "You're a whale, congratulations!"  
+    | bmi <= skinny = "You're underweight"   
+    | bmi <= normal = "You're supposedly normal"  
+    | bmi <= fat    = "You're overweight"   
+    | otherwise     = "You're obese"   
     where bmi = weight / height ^ 2  
           (skinny, normal, fat) = (18.5, 20.0, 30.0)
 
@@ -73,7 +73,7 @@ initials firstname lastname = [f] ++ ". " ++ [l] ++ "."
           (l:_) = lastname  
 
 -- This function takes in first and last name and returns initials
--- Where bindings can be used here as well (though not as simple
+-- "where" bindings can be used here as well (though not as simple
 -- as just using pattern matching in the parameters)
 
 -- you can also define a function in the where clause, like so
@@ -84,7 +84,7 @@ calcBmis xs = [bmi w h | (w, h) <- xs]
 
 {-
 *let . . . in*
-if you want a guard specific binding, use let instead of where
+if you want a guard-specific binding, use let instead of where
 syntax: let<bindings> in <expression>
 put the binding before the expression (opposite of where)-}
 
