@@ -173,13 +173,13 @@ the function applied to each element of the list
 	- similar to a list comprehension
 
 Here's how it is defined
--}
+
 
 map :: (a -> b) -> [a] -> [b]  
 map _ [] = []  
 map f (x:xs) = f x : map f xs  
 
-{-
+
 ghci> map (+3) [1,5,3,1,6]  
 ghci> map (++ "!") ["BIFF", "BANG", "POW"]  
 ghci> map (replicate 3) [3..6]  
@@ -192,14 +192,13 @@ list and returns a list with all the elements for which
 the predicate is true
 
 Here's the implementation
--}
+
 filter :: (a -> Bool) -> [a] -> [a]  
 filter _ [] = []  
 filter p (x:xs)   
     | p x       = x : filter p xs  
     | otherwise = filter p xs  
 
-{-
 ghci> filter (>3) [1,5,3,2,1,6,4,3,2,1]  
 [5,6,4]  
 ghci> filter (==3) [1,2,3,4,5]  
