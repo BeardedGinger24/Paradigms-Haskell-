@@ -5,8 +5,7 @@ import Data.List
 These are collections of related functions, 
 and typeclasses
 
-They aren't automatically available: you have
-to import them
+They aren't automatically available: you have to import them
 
 in a script, put this at the top:
 import <module name>
@@ -16,6 +15,7 @@ import Data.List
 At the command prompt:
 prelude>:m Data.List
 
+If you want to avoid namespace collisions, use qualified
 import qualified (have to type module name)
 import qualified Data.List
 
@@ -26,8 +26,7 @@ or use an alias in the import:
 
 import qualified Data.List as dl
 
-Learn You a Haskell has descriptions
-of a bunch of modules: look them
+Learn You a Haskell has descriptions of a bunch of modules: look them
 over.
 
 
@@ -37,14 +36,14 @@ Define a new data type, Shape
 
 -}
 
-data Shape = Circle Float Float Float | Rectangle Float Float Float Float
+--data Shape = Circle Float Float Float | Rectangle Float Float Float Float
 
 {-
-The first word is data, then the name of the type (capitalized, then =, then the constructors separated
-by pipes)
+The first word is data, then the name of the type (capitalized, then =, 
+then the constructors separated by pipes)
 
-Note, Circle and Rectangle are not subtypes of Shape, they are functions that serve as constructors for 
-Shape
+Note, Circle and Rectangle are not subtypes of Shape, they are functions that 
+serve as constructors for Shape
 
 Try:
 
@@ -72,7 +71,7 @@ ghci> surface $ Rectangle 0 0 100 100
 Can't print a Circle, because it's not a Show. But we can fix that with
 (comment in, comment out earlier one)
 -}
---data Shape = Circle Float Float Float | Rectangle Float Float Float Float deriving (Show)
+data Shape = Circle Float Float Float | Rectangle Float Float Float Float deriving (Show)
  {-
 Then:
 ghci> Circle 10 20 5  
@@ -108,7 +107,9 @@ data Person = Person {firstName :: String,
  age :: Int, 
  height :: Float, 
  phoneNumber :: String, 
- flavor :: String} deriving (Show)   
+ flavor :: String} deriving (Show)
+
+data Car = Car {company :: String, model :: String, year :: Int} deriving(Show)   
 
 {-
 Easier when there are a lot of different params and we'd like to keep track of
@@ -125,13 +126,16 @@ ghci> Car {company="Ford", model="Mustang", year=1967}
 Car {company = "Ford", model = "Mustang", year = 1967} 
 
 Type parameters
-
+:t
 consider this built in data type:
 
 data Maybe a = Nothing | Just a  
 
-This is useful if you might return Nothing (Haskellese for null) --- remember null checks?
-Using a type parameter allows any type to be used in Maybe, and no type can be just a Maybe. 
+This is useful if you might return Nothing (Haskellese for null) --- remember null 
+checks?
+Using a type parameter allows any type to be used in Maybe, and no type can be 
+just a Maybe. 
+
 Instead you have:
 
 Maybe Char
@@ -151,16 +155,21 @@ Nothing :: Maybe a
 ghci> Just 10 :: Maybe Double  
 Just 10.0  
 
-list types also use type parameters --- there is no [] type, but there is [Char] or [Int]
+list types also use type parameters --- there is no [] type, but there is [Char] or 
+[Int]
 
-Another type that uses type parameters is Data.Map. This type is a hash or a dictionary.
+Another type that uses type parameters is Data.Map. This type is a hash or a 
+dictionary.
+
 Map k v
-has k type of keys, and v type of values, so we can have maps from any type to any other type
+has k type of keys, and v type of values, so we can have maps from any type to 
+any other type
 
-Note: never add typeclass constraints in data declarations (put them into functions instead)
+Note: never add typeclass constraints in data declarations (put them into functions 
+instead)
 
-Distinguish type constructors and value constructors:
 
+A new type Vector
 -}
 
 data Vector a = Vector a a a deriving (Show)  
@@ -200,7 +209,7 @@ the type classes, and those can be performed on this type.
 -}
 
 data Person' = Person' { 
-irstName' :: String, 
+firstName' :: String, 
 lastName' :: String, 
 age' :: Int} deriving (Eq, Show, Read)  
 
@@ -214,7 +223,8 @@ A type can include itself in its definition
 
 Our own version of list:
 
-data List a = Empty | Cons { listHead :: a, listTail :: List a} deriving (Show, Read, Eq, Ord)  
+data List a = Empty | Cons { listHead :: a, listTail :: List a} 
+deriving (Show, Read, Eq, Ord)  
 
 BTW, cons is the same as :
 
@@ -246,12 +256,12 @@ data Tree a = EmptyTree | Node a (Tree a) (Tree a) deriving (Show, Read, Eq)
 -- Functions to insert elements into trees
 
 -- Create a single Node
-singleton :: a -> Tree a  
-singleton x = Node x EmptyTree EmptyTree  
- 
+makeNode :: a -> Tree a  
+makeNode x = Node x EmptyTree EmptyTree  
+
 -- Inserting into a tree 
 treeInsert :: (Ord a) => a -> Tree a -> Tree a  
-treeInsert x EmptyTree = singleton x  
+treeInsert x EmptyTree = makeNode x  
 treeInsert x (Node a left right)   
     | x == a = Node x left right  
     | x < a  = Node a (treeInsert x left) right  
@@ -268,6 +278,21 @@ treeElem x (Node a left right)
     | x > a  = treeElem x right   
 
 {-
+Populating a tree with a list
+
+ghci> let nums = [8,6,4,1,7,3,5]  
+ghci> let numsTree = foldr treeInsert EmptyTree nums  
+ghci> numsTree  
+Node 5 (Node 3 (Node 1 EmptyTree EmptyTree) (Node 4 EmptyTree EmptyTree)) (Node 7 (Node 6 EmptyTree EmptyTree) (Node 8 EmptyTree EmptyTree))  
+
+ghci> 8 `treeElem` numsTree  
+True  
+ghci> 100 `treeElem` numsTree  
+False  
+ghci> 1 `treeElem` numsTree  
+True  
+ghci> 10 `treeElem` numsTree  
+False  
 
 -}
 
