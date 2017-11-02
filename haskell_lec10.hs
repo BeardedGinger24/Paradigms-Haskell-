@@ -1,6 +1,7 @@
 {-
 **IO**
-Note: this code won't compile, it's just given a hs extension for syntax coloring
+Note: this code won't compile, it's just given a hs extension for syntax 
+coloring
 
 
 Setup:
@@ -166,6 +167,73 @@ going for further entries
 
 Check out, from the textbook, putStr, putChar, getChar,  print: these are helpful 
 functions.
+
+*File IO*
+
+getContents reads everything from a standard input until it reaches an
+end-of-file character.
+
+It works lazily, only gets what you ask for from the input
+
+Retrieve values from getContents with <-
+
+Useful with piping (a UNIX thing):
+
+To see what that is, make a text file with some text (use this if you want)
+
+ So that it must, 
+ in fine, be maintained, 
+ all things being maturely 
+ and carefully considered, 
+ that this proposition, 
+ I am, I exist, 
+ is necessarily true each 
+ time it is expressed by me, 
+ or conceived in my mind.
+
+ Then make a Haskell file named capslocker.hs and put this in it:
+-}
+import Control.Monad  
+import Data.Char  
+  
+main = forever $ do  
+    l <- getLine  
+    putStrLn $ map toUpper l  
+
+{-
+Then try this at the command line:
+
+$ ghc --make capslocker   
+$ cat text.txt    
+$ cat text.txt | ./capslocker  
+
+Here we are piping the result printing of capslocker into
+
+Here's away to read a file directly, without using cat:  
+-}
+
+import System.IO  
+  
+main = do  
+    contents <- readFile "test.txt"  
+    putStr contents  
+
+{- an easy way to write to a file
+-}
+
+import System.IO     
+import Data.Char  
+    
+main = do     
+    contents <- readFile "test.txt"     
+    writeFile "testcaps.txt" (map toUpper contents) 
+
+{-
+These are the simplest ways to do file IO. Learn You a Haskell has other,
+more complicated and flexible ways as well, it might be worth taking a look
+when you have time. 
+
+-} 
 
 
 
