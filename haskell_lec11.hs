@@ -39,7 +39,6 @@ It views, adds, and deletes tasks
 
 -}
 
-
 import System.Environment   
 import System.Directory  
 import System.IO  
