@@ -37,6 +37,9 @@ Then print to screen
 Another app using these functions: todo
 It views, adds, and deletes tasks
 
+to use, call the program with:
+function filename stringtoadd
+
 -}
 
 import System.Environment   
@@ -49,14 +52,18 @@ dispatch =  [ ("add", add)
             , ("view", view)  
             , ("remove", remove)  
             ]  
+-- dispatch is an association list, a lot like a Python dictionary
    
 main = do  
     (command:args) <- getArgs  
     let (Just action) = lookup command dispatch  
     action args  
+
+-- lookup gets a value for a key in an association list
   
 add :: [String] -> IO ()  
 add [fileName, todoItem] = appendFile fileName (todoItem ++ "\n")  
+-- appendFile is an IO action that appends a string to a file
   
 view :: [String] -> IO ()  
 view [fileName] = do  
@@ -64,6 +71,11 @@ view [fileName] = do
     let todoTasks = lines contents  
         numberedTasks = zipWith (\n line -> show n ++ " - " ++ line) [0..] todoTasks  
     putStr $ unlines numberedTasks  
+
+-- lines: breaks up strings into a list of strings at the new line char
+-- unlines: reverse of lines
+
+
   
 remove :: [String] -> IO ()  
 remove [fileName, numberString] = do  
@@ -78,3 +90,9 @@ remove [fileName, numberString] = do
     hClose tempHandle  
     removeFile fileName  
     renameFile tempName fileName  
+
+-- openTempFile creates a temporary file, which must be removed manually
+-- removeFile is a function from System.Directory that removes a file
+-- we are using a temp file to store intermediate results, since the 
+-- text doesn't mention a way to directly remove contents from a file in Haskell 
+-- ReadMode opens the file in a read only fashion: ok since we aren't modifying it
