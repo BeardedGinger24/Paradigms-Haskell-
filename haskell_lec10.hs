@@ -123,9 +123,9 @@ name = getLine
 
 for the same reasons. It just creates an alias for getLine.
 
-Another note: In a script, IO actions can only be performed when given the name of main or
-when they are inside a bigger IO option composed with a do block. They always
-eventually fall under main.
+Another note: In a script, IO actions can only be performed when 
+given the name of main or when they are inside a bigger IO option 
+composed with a do block. They always eventually fall under main.
 
 Let expressions can be used without in when inside do blocks:
 -}
@@ -225,8 +225,8 @@ import System.IO
 import Data.Char  
     
 main = do     
-    contents <- readFile "test.txt"     
-    writeFile "testcaps.txt" (map toUpper contents) 
+    contents <- readFile "text.txt"     
+    writeFile "textcaps.txt" (map toUpper contents) 
 
 {-
 These are the simplest ways to do file IO. Learn You a Haskell has other,

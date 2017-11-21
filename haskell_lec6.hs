@@ -11,7 +11,7 @@ These are base cases.
 Strategy: 
 Define a base case. 
 Then, for non-base cases, define a way to get the total 
-solution a smaller version of the problem (the recursive case). 
+solution from a smaller version of the problem (the recursive case). 
 This last part is called divide-and-conquer
 
 A feature of Haskell (functional programming): "Recursion is 
@@ -116,10 +116,8 @@ Here's the algorithm in Haskell
 
 quicksort :: (Ord a) => [a] -> [a]
 quicksort [] = []
-quicksort (x:xs) = 
-        let smaller = quicksort [a | a <- xs, a <= x]
-            bigger  = quicksort [a | a <- xs, a > x]
-        in smaller ++ [x] ++ bigger
+quicksort (x:xs) = quicksort [a | a <- xs, a <= x] ++ [x] ++ quicksort [a | a <- xs, a > x]
+        
 
 -- remember, we are not telling Haskell how to calculate this,
 -- we are just informing it of all the relevant relationships

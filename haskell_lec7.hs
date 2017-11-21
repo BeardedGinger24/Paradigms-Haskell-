@@ -215,6 +215,7 @@ comprehensions
 
 Here's a slightly more readable version of quicksort
 -}
+
 quicksort :: (Ord a) => [a] -> [a]    
 quicksort [] = []    
 quicksort (x:xs) =     
@@ -241,7 +242,6 @@ return "elephants"
 Try:
 ghci> sum (takeWhile (<10000) (filter odd (map (^2) [1..])))  
 166650  
-
 -}
 
 

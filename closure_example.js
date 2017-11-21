@@ -1,14 +1,27 @@
-function makeCounter(){
-	var counter = 0;
-	return function(){
-		return counter++;
+// function makeCounter(){
+// 	var counter = 0;
+// 	return function(){
+// 		return counter++;
+// 	};
+// };
+
+function addX(x){
+	return function(y){
+		return x + y;
 	};
 };
 
-var advanceCounter = makeCounter();
+// function addXandY(x, y){
+// 	return x + y;
+// };
+
+var add10 = addX(10);
+console.log(add10(3));
+
+// var advanceCounter = makeCounter();
 
 for(var i = 0; i < 5; i++){
-	console.log(advanceCounter());
+	console.log(add10(i));
 }
 
 

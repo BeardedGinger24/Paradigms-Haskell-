@@ -1,8 +1,8 @@
-{-
+ {-
 *Command line arguments*
 
-With command line arguments we can pass information into a program before it runs,
-and not have to interact with it after it starts running.
+With command line arguments we can pass information into a program 
+before it runs, and not have to interact with it after it starts running.
 	- good for batch scripts
 
 To use command line arguments, we use the module:
@@ -13,7 +13,6 @@ It has two IO actions we can use: getArgs and getProgName
 A short demo of these functions:
 
 -}
-
 {-
 import System.Environment   
 import Data.List  
@@ -27,7 +26,6 @@ main = do
    putStrLn progName 
 
 -}
-
 {-
 Bind args to getArgs
 bind progName to getProgName
@@ -74,19 +72,15 @@ view [fileName] = do
 
 -- lines: breaks up strings into a list of strings at the new line char
 -- unlines: reverse of lines
-
-
   
 remove :: [String] -> IO ()  
 remove [fileName, numberString] = do  
-    handle <- openFile fileName ReadMode  
+    contents <- readFile fileName   
     (tempName, tempHandle) <- openTempFile "." "temp"  
-    contents <- hGetContents handle  
     let number = read numberString  
         todoTasks = lines contents  
         newTodoItems = delete (todoTasks !! number) todoTasks  
-    hPutStr tempHandle $ unlines newTodoItems  
-    hClose handle  
+    hPutStr tempHandle $ unlines newTodoItems   
     hClose tempHandle  
     removeFile fileName  
     renameFile tempName fileName  

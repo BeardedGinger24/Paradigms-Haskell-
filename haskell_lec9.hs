@@ -29,7 +29,6 @@ import qualified Data.List as dl
 Learn You a Haskell has descriptions of a bunch of modules: look them
 over.
 
-
 ** Custom Data Types**
 
 Define a new data type, Shape
@@ -81,7 +80,7 @@ Rectangle 50.0 230.0 60.0 90.0
 
 Since constructors are functions, we can partially apply them
 
-ghci> map (Circle 10 20) [4,5,6,6]  
+ghci> 
 [Circle 10.0 20.0 4.0,Circle 10.0 20.0 5.0,Circle 10.0 20.0 6.0,Circle 10.0 20.0 6.0] 
 creating a concentric ring of circles
 
@@ -109,7 +108,8 @@ data Person = Person {firstName :: String,
  phoneNumber :: String, 
  flavor :: String} deriving (Show)
 
-data Car = Car {company :: String, model :: String, year :: Int} deriving(Show)   
+data Car = Car {company :: String, model :: String, year :: Int} deriving(Show)  
+
 
 {-
 Easier when there are a lot of different params and we'd like to keep track of
@@ -212,7 +212,6 @@ data Person' = Person' {
 firstName' :: String, 
 lastName' :: String, 
 age' :: Int} deriving (Eq, Show, Read)  
-
 
 {-
 *Recursive data structures*
