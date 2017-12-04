@@ -110,21 +110,6 @@ everyOther f (x:y:therest) = (f x):y:(everyOther f therest)
 lists and a function that takes 3 parameters, and returns a 
 list with the function applied to each corresponding element 
 in the 3 lists
-
-2pts) Write a function that takes a function (Int -> Int) and an 
-Int and returns (Int, Int), where the first element is the Int
-without the function applied to it, and the second is the result  of 
-applying the function to the Int.
-
-2pts) Using map and the function you just wrote, write a function that takes 
-a list of Ints and a function (Int -> Int) and returns 
-a new list of tuples, with the 
-first element being the original element, and the second being 
-the result of the transformation.
-
-e.g. [1,2,3] becomes [(1,1), (2, 4), (3, 9)] if the function 
-passed in returns the square of an element
-
 -}
 
 zipW3 :: (a -> b -> c -> d) -> [a] -> [b] -> [c] -> [d]
@@ -133,8 +118,23 @@ zipW3 f _ [] _ = []
 zipW3 f _ _ [] = []
 zipW3 f (a:as) (b:bs) (c:cs) = (f a b c) : zipW3 f as bs cs
 
+
+-- 2pts) Write a function that takes a function (Int -> Int) and an 
+-- Int and returns (Int, Int), where the first element is the Int
+-- without the function applied to it, and the second is the result  of 
+-- applying the function to the Int.
+
 toTuple :: (Int -> Int) -> Int -> (Int, Int)
 toTuple f x = (x, f x)
+
+-- 2pts) Using map and the function you just wrote, write a function that takes 
+-- a list of Ints and a function (Int -> Int) and returns 
+-- a new list of tuples, with the 
+-- first element being the original element, and the second being 
+-- the result of the transformation.
+
+-- e.g. [1,2,3] becomes [(1,1), (2, 4), (3, 9)] if the function 
+-- passed in returns the square of an element
 
 toTuples :: (Int -> Int) -> [Int] -> [(Int, Int)]
 toTuples f [] = []
@@ -155,41 +155,19 @@ g100d5 = (==0) . (`mod` 5)
 {- 2. 2pts) Write a function that checks if every other letter of a 
 string is between 'a' and 'f'. The function takes in a String and 
 returns a Bool. Use partial application at least once.-}
+
 checkEveryOther :: String -> Bool
 checkEveryOther [] = True
 checkEveryOther (x:[]) = (`elem` ['a' .. 'f']) x
-checkEveryOther (x:y:therest) = (`elem` ['a' .. 'f']) x && (checkEveryOther therest)
+checkEveryOther (x:y:therest) = (`elem` ['a' .. 'f']) x && (checkEveryOther therest) 
 
-
-{- 3. 4pts) Write a function that takes two lists, zips them, then maps 
-the result to a list of sums of the numbers in the tuples. 
-E.g., [1, 2, 3] [4, 5, 6] gets zipped to [(1, 4), (2, 5), (3,6)], 
-then gets mapped to [5, 7, 9].
-
-4. 4pts) Write a function that maps a list of Strings that may have 
-multiple words to Strings with only the first word left. 
-E.g. ["Today is Thursday", "Banquet", "unreal games"] becomes 
-["Today", "Banquet", "unreal"].
-
-5. 4pts) Write a function that takes a two dimensional matrix of 
-Strings and transforms all empty strings to "0". 
-
-6. 4pts) Write a function that converts [a, b, c, d, . . . ] to 
-[(a,b), (c, d), . . .], where a, b, c, and d can be any type.
-
-7. 2pts) Using the previous function, convert each tuple to a product 
-of its two elements, using foldl and a lambda expression.
-
-8. 1pt) Using scanl, write a function that takes a list of Ints and 
-make a list of cumulative sums. 
-
-9. 1pt) Consider this function:
+--9. 1pt) Consider this function:
 
 applyThrice :: (Int -> Int) -> Int -> Int
 applyThrice f x = f (f (f x))
 
-Use $ to make the second line more readable
--}
+--Use $ to make the second line more readable
+
 applyThrice' :: (Int -> Int) -> Int -> Int
 applyThrice' f x = f $ f $ f x
 
@@ -215,23 +193,21 @@ isLowerCase' = (`elem` ['a' .. 'z'])
 
 -}
 
+-- you can also just use the sort method in the Data.List module
 quicksort :: (Ord a) => [a] -> [a]    
 quicksort [] = [] 
 quicksort (x:xs) =     
     let smallerSorted = quicksort (filter (<=x) xs)  
         biggerSorted = quicksort (filter (>x) xs)   
     in  smallerSorted ++ [x] ++ biggerSorted 
--- sort
--- group consecutive
 
--- getFreq (x:[]) = []
--- getFreq (x:xs) = takeWhile (==x) (xs) 
-
+gather :: (Ord a) => [a] -> [a]   
 gather [] = []
 gather (x:xs) = t: gather (drop (length t) (x:xs))
     where t = takeWhile (==x) (x:xs)
 
-
+pack :: (Ord a) => [a] -> [a]   
+pack x = gather . quicksort x
 
 
 
