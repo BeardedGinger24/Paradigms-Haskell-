@@ -163,13 +163,13 @@ checkEveryOther (x:y:therest) = (`elem` ['a' .. 'f']) x && (checkEveryOther ther
 
 --9. 1pt) Consider this function:
 
-applyThrice :: (Int -> Int) -> Int -> Int
-applyThrice f x = f (f (f x))
+applyThrice'' :: (Int -> Int) -> Int -> Int
+applyThrice'' f x = f (f (f x))
 
 --Use $ to make the second line more readable
 
-applyThrice' :: (Int -> Int) -> Int -> Int
-applyThrice' f x = f $ f $ f x
+applyThrice''' :: (Int -> Int) -> Int -> Int
+applyThrice''' f x = f $ f $ f x
 
 {-
 10. 2pts) Convert:
@@ -183,31 +183,22 @@ isLowerCase' :: Char -> Bool
 isLowerCase' = (`elem` ['a' .. 'z'])
 
 {-
-11. 4pts) Sort a list of Strings by length of the first word in the strings (if the strings have more than one word)
 
 5pts) Pack repeats in a list of Chars into separate lists, resulting in a sorted list of lists: E.g., 
 
-['a', 'a', 'a', 'a', 'b', 'c', 'c', 'a', 
-             'a', 'd', 'e', 'e', 'e', 'e'] becomes
+['a','a','a','a','b','c','c','a','a','d','e','e','e','e'] becomes
 ["aaaaaa","b","cc","d","eeee"]
 
 -}
 
--- you can also just use the sort method in the Data.List module
-quicksort :: (Ord a) => [a] -> [a]    
-quicksort [] = [] 
-quicksort (x:xs) =     
-    let smallerSorted = quicksort (filter (<=x) xs)  
-        biggerSorted = quicksort (filter (>x) xs)   
-    in  smallerSorted ++ [x] ++ biggerSorted 
 
-gather :: (Ord a) => [a] -> [a]   
+gather :: (Ord a) => [a] -> [[a]]
 gather [] = []
-gather (x:xs) = t: gather (drop (length t) (x:xs))
+gather (x:xs) = t:gather (drop (length t) (x:xs))
     where t = takeWhile (==x) (x:xs)
 
-pack :: (Ord a) => [a] -> [a]   
-pack x = gather . quicksort x
+pack :: (Ord a) => [a] -> [[a]]
+pack x = gather $ sort x
 
 
 
